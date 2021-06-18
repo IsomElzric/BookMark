@@ -1,19 +1,27 @@
 package com.turner.bookmark;
 
+import android.app.Activity;
+import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
 import com.google.gson.Gson;
 
 public class SearchManager extends Thread {
 
+    private static final String TAG = "SearchManager";
     private final String baseUrl = "https://openlibrary.org/search.json?";
+    private Activity activity;
     private String title;
     private String author;
     private Gson gson;
     private HTTPHelper httpHelper;
     private SearchDocuments documents;
 
-    public SearchManager(String title, String author) {
+    public SearchManager(String title, String author, Activity activity) {
         gson = new Gson();
         httpHelper = new HTTPHelper();
+        this.activity = activity;
         this.title = title;
         this.author = author;
     }
@@ -27,14 +35,24 @@ public class SearchManager extends Thread {
 
     @Override
     public void run() {
-        SearchManager manager = new SearchManager(title, author);
+        SearchManager manager = new SearchManager(title, author, activity);
         documents = manager.searchBook();
+
+        Log.d(TAG, String.format("Retrieved %s", documents));
+
+        /*
+        ArrayAdapter<BookDocument> documentAdapter =
+                new ArrayAdapter<>(activity,
+                        android.R.layout.simple_list_item_1,
+                        documents.getDocs());
+
+        ListView listView = activity.findViewById(R.id.listViewResults);
+
+        activity.runOnUiThread(() -> listView.setAdapter(documentAdapter));
+        */
     }
 
-    public SearchDocuments getBooks() {
-        if (documents != null) {
-            return documents;
-        }
-        return null;
+    public SearchDocuments getResults() {
+        return documents;
     }
 }

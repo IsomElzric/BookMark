@@ -12,6 +12,10 @@ public class SearchDocuments {
         return docs;
     }
 
+    public BookDocument getBook(int index) {
+        return docs.get(index);
+    }
+
     public String toString() {
         StringBuilder result = new StringBuilder();
         for (BookDocument book : docs) {

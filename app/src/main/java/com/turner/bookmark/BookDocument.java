@@ -25,6 +25,6 @@ public class BookDocument {
     }
 
     public String toString() {
-        return String.format("%s: %s by %s", isbn.get(0), title, author.get(0));
+        return String.format("%s by %s", title, author.get(0));
     }
 }
