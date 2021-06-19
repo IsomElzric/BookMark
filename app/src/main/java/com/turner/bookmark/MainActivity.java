@@ -6,26 +6,39 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-
+import com.google.gson.Gson;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String EXTRA_MESSAGE = "com.turner.bookmark.BOOKLIST";
     private static final String TAG = "MainActivity";
     private List<BookDocument> list;
     private final Activity activity = this;
+    private static final BookList bookList = new BookList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Gson gson = new Gson();
         ListView listView = findViewById(R.id.listViewBooks);
-        BookList bookList = new BookList();
+
+        Intent intent = getIntent();
+        BookDocument book = gson.fromJson(intent.getStringExtra(SearchActivity.EXTRA_MESSAGE), BookDocument.class);
+
+        try {
+            Log.d(TAG, String.format("Deserialized to %s", book.toString()));
+
+            bookList.addCurrent(book);
+            Log.d(TAG, String.format("Book list contains %s", bookList.getFullList()));
+        }
+        catch (NullPointerException npe) {
+            Log.d(TAG, Arrays.toString(npe.getStackTrace()));
+        }
+
         if (bookList.getFullList() != null) {
             list = bookList.getFullList();
             ArrayAdapter<BookDocument> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_list_item_1, list);
@@ -39,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickForTest2(View view) {
         Intent intent = new Intent(activity, SearchActivity.class);
-        // intent.putExtra(EXTRA_MESSAGE, bookList);
         startActivity(intent);
     }
 }

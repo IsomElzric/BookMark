@@ -7,27 +7,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import com.google.gson.Gson;
 
 import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
 
+    public static final String EXTRA_MESSAGE = "com.turner.bookmark.BOOK";
     private static final String TAG = "SearchActivity";
     private SearchDocuments documents;
-    private BookList bookList;
     private final Activity activity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-
-        // Intent intent = getIntent();
-        // bookList = (BookList) intent.getSerializableExtra(MainActivity.EXTRA_MESSAGE);
     }
 
     public void onClickSearch(View view) throws InterruptedException {
@@ -56,7 +54,10 @@ public class SearchActivity extends AppCompatActivity {
 
         listView.setOnItemClickListener((parent, view1, position, id) -> {
             Log.d(TAG, String.format("Clicked on: %s", documents.getBook(position)));
-            // bookList.addCurrent(documents.getBook(position));
+            Gson gson = new Gson();
+            Intent intent = new Intent(activity, MainActivity.class);
+            intent.putExtra(EXTRA_MESSAGE, gson.toJson(documents.getBook(position)));
+            startActivity(intent);
         });
     }
 }

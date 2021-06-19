@@ -1,13 +1,19 @@
 package com.turner.bookmark;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class BookList implements Serializable {
+public class BookList {
 
-    private List<BookDocument> fullList;
-    private List<BookDocument> currentList;
-    private List<BookDocument> completedList;
+    private final List<BookDocument> fullList;
+    private final List<BookDocument> currentList;
+    private final List<BookDocument> completedList;
+
+    public BookList() {
+        fullList = new ArrayList<>();
+        currentList = new ArrayList<>();
+        completedList = new ArrayList<>();
+    }
 
     public void addCurrent(BookDocument book) {
         fullList.add(book);

@@ -1,9 +1,13 @@
 package com.turner.bookmark;
 
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class BookDocument {
+public class BookDocument implements Serializable {
 
     @SerializedName("title")
     private String title;
