@@ -51,7 +51,7 @@ public class InternalStorage {
 
 
         }catch(FileNotFoundException e){
-            e.pringSTackTrace();
+            e.printSTackTrace();
         }catch(IOException e){
             e.printStackTrace();
         }
