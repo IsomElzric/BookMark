@@ -37,7 +37,7 @@ public class SearchActivity extends AppCompatActivity {
 
         Log.d(TAG, String.format("Searching for %s by %s", title, author));
 
-        SearchManager searchManager = new SearchManager(title, author, activity);
+        SearchManager searchManager = new SearchManager(title, author);
 
         Thread threadSearch = new Thread(searchManager);
         threadSearch.start();
