@@ -12,7 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BookMark">
-        <activity android:name=".BookActivity"></activity>
+        <activity
+            android:name=".NoteActivity"
+            android:label="@string/title_activity_note"
+            android:theme="@style/Theme.BookMark.NoActionBar"></activity>
+        <activity android:name=".BookActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
