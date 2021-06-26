@@ -11,17 +11,15 @@ public class SearchManager extends Thread {
 
     private static final String TAG = "SearchManager";
     private final String baseUrl = "https://openlibrary.org/search.json?";
-    private Activity activity;
     private String title;
     private String author;
     private Gson gson;
     private HTTPHelper httpHelper;
     private SearchDocuments documents;
 
-    public SearchManager(String title, String author, Activity activity) {
+    public SearchManager(String title, String author) {
         gson = new Gson();
         httpHelper = new HTTPHelper();
-        this.activity = activity;
         this.title = title;
         this.author = author;
     }
@@ -35,7 +33,7 @@ public class SearchManager extends Thread {
 
     @Override
     public void run() {
-        SearchManager manager = new SearchManager(title, author, activity);
+        SearchManager manager = new SearchManager(title, author);
         documents = manager.searchBook();
 
         Log.d(TAG, String.format("Retrieved %s", documents));

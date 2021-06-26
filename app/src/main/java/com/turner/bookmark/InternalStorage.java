@@ -40,7 +40,7 @@ public class InternalStorage {
             FileInputStream fileInputStream = openFileInput("Tutorial BookMark.txt");
             InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
 
-            BufferedReader bufferedReader = newBufferedReader(inputStreamReader);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             StringBuffer stringBuffer = new StringBuffer();
 
             String lines;
@@ -51,7 +51,7 @@ public class InternalStorage {
 
 
         }catch(FileNotFoundException e){
-            e.printSTackTrace();
+            e.printStackTrace();
         }catch(IOException e){
             e.printStackTrace();
         }

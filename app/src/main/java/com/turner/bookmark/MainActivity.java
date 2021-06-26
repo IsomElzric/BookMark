@@ -15,6 +15,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    public static final String EXTRA_MESSAGE = "com.turner.bookmark.BOOK";
     private List<BookDocument> list;
     private final Activity activity = this;
     private static final BookList bookList = new BookList();
@@ -46,6 +47,15 @@ public class MainActivity extends AppCompatActivity {
 
             listView.setOnItemClickListener((parent, view, position, id) -> {
                 Log.d(TAG, String.format("Clicked on: %s", list.get(position)));
+                Intent intent1 = new Intent(activity, BookActivity.class);
+                intent1.putExtra(EXTRA_MESSAGE, gson.toJson(list.get(position)));
+                startActivity(intent1);
+
+                /*
+                CoverManager coverManager = new CoverManager(list.get(position).getIsbn().get(0));
+                Thread coverThread = new Thread(coverManager);
+                coverThread.start();
+                */
             });
         }
 
