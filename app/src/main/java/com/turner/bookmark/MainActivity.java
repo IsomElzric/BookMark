@@ -106,5 +106,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void reminderButtonOnClick(View view) {
+        Intent intent = new Intent(activity, ReminderActivity.class);
+        startActivity(intent);
+    }
+
 
 }

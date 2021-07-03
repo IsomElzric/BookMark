@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- copied code -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
@@ -16,9 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BookMark">
         <activity
+            android:name=".ReminderActivity"
+            android:label="@string/title_activity_reminder"></activity>
+        <activity
             android:name=".NoteActivity"
             android:label="@string/title_activity_note"
-            android:theme="@style/Theme.BookMark.NoActionBar"></activity>
+            android:theme="@style/Theme.BookMark.NoActionBar" />
         <activity android:name=".BookActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".MainActivity">
