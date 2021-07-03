@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //InternalStorage pullStorage = new InternalStorage();
+        //pullStorage.readFile();
         setContentView(R.layout.activity_main);
         Gson gson = new Gson();
         ListView listView = findViewById(R.id.listViewBooks);
