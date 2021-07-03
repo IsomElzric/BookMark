@@ -13,9 +13,9 @@ public class StarRating extends AppCompatActivity {
 
     protected void starRating(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.book_layout);
 
-        ratingBar = findViewById(R.id.rating_bar);
+        ratingBar = findViewById(R.id.book_rating);
 
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener(){
             @Override

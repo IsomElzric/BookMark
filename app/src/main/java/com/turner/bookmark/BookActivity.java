@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.Serializable;
@@ -31,7 +33,17 @@ public class BookActivity extends AppCompatActivity {
         setContentView(R.layout.activity_book);
         Gson gson = new Gson();
         Intent intent = getIntent();
-        BookDocument book = gson.fromJson(intent.getStringExtra(MainActivity.EXTRA_MESSAGE), BookDocument.class);
+        BookDocument book = gson.fromJson(intent.getStringExtra(MainActivity.EXTRA_MESSAGE),
+                BookDocument.class);
+
+        //ListView testing
+        notes.add("note text");
+        notes.add("blah blah blah");
+        notes.add("third test string");
+        ArrayAdapter noteAdapter = new ArrayAdapter<String>(this, R.layout.activity_book,
+                notes);
+        ListView listview = (ListView) findViewById(R.id.notes);
+        listview.setAdapter(noteAdapter);
 
         try {
             Log.d(TAG, String.format("Deserialized to %s", book.toString()));

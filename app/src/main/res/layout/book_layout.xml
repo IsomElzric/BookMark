@@ -17,18 +17,33 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/book_info"
+        android:id="@+id/book_title"
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="31dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:text="TextView"
+        android:text="Book Title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/book_cover"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/book_info"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Book Info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/book_cover"
+        app:layout_constraintTop_toBottomOf="@+id/book_title" />
 
     <RatingBar
         android:id="@+id/book_rating"
@@ -36,13 +51,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:stepSize="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/book_cover"
-        app:layout_constraintTop_toBottomOf="@+id/book_info" />
+        tools:layout_editor_absoluteY="112dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
