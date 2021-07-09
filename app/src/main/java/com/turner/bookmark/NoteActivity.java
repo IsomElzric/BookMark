@@ -26,7 +26,7 @@ public class NoteActivity extends AppCompatActivity{
         setContentView(R.layout.activity_book);
     }
 
-    public void saveScripture(View view) {
+    public void saveNote(View view) {
         Intent intent = new Intent(this, BookActivity.class);
         EditText note = (EditText) findViewById(R.id.note);
         intent.putExtra(NOTE, note.getText());

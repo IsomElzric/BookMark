@@ -1,4 +1,4 @@
-package com.kabasele.activitynote;
+package com.turner.bookmark;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +30,7 @@ public class NoteAdapter extends ListAdapter<Note, NoteAdapter.NoteHolder> {
     @Override
     public NoteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.note_item, parent, false);
+                .inflate(R.layout.content_note, parent, false);
         return new NoteHolder(itemView);
     }
     @Override
@@ -49,9 +49,9 @@ public class NoteAdapter extends ListAdapter<Note, NoteAdapter.NoteHolder> {
         private TextView textViewPriority;
         public NoteHolder(View itemView) {
             super(itemView);
-            textViewTitle = itemView.findViewById(R.id.text_view_title);
-            textViewDescription = itemView.findViewById(R.id.text_view_description);
-            textViewPriority = itemView.findViewById(R.id.text_view_priority);
+            textViewTitle = itemView.findViewById(R.id.note_headder);
+            textViewDescription = itemView.findViewById(R.id.note);
+            //textViewPriority = itemView.findViewById(R.id.text_view_priority);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

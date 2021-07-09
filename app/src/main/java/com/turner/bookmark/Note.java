@@ -1,4 +1,4 @@
-package com.kabasele.activitynote;
+package com.turner.bookmark;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

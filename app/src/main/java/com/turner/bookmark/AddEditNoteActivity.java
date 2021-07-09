@@ -1,4 +1,4 @@
-package com.kabasele.activitynote;
+package com.turner.bookmark;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,10 +22,10 @@ public class AddEditNoteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_note);
-        editTextTitle = findViewById(R.id.edit_text_title);
-        editTextDescription = findViewById(R.id.edit_text_description);
-        numberPickerPriority = findViewById(R.id.number_picker_priority);
+//        setContentView(R.layout.activity_add_note);
+//        editTextTitle = findViewById(R.id.edit_text_title);
+//        editTextDescription = findViewById(R.id.edit_text_description);
+//        numberPickerPriority = findViewById(R.id.number_picker_priority);
         numberPickerPriority.setMinValue(1);
         numberPickerPriority.setMaxValue(10);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
