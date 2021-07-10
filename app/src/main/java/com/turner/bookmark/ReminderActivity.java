@@ -1,15 +1,23 @@
 package com.turner.bookmark;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-
+import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceFragmentCompat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ReminderActivity extends AppCompatActivity {
 
@@ -29,6 +37,11 @@ public class ReminderActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        SharedPreferences sharedpreferences = this.getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+        String repeat = sharedpreferences.getString("repeat", null);
+        String reminderTime = sharedpreferences.getString("reminderTime", null);
+        String customMessage = sharedpreferences.getString("customReminder", null);
+
         Spinner dropdown = findViewById(R.id.repeat);
 //create a list of items for the spinner.
         String[] items = new String[]{"Hourly", "Daily", "Weekly"};
@@ -38,13 +51,23 @@ public class ReminderActivity extends AppCompatActivity {
 //set the spinners adapter to the previously created one.
         dropdown.setAdapter(adapter);
 
-    }
-
-    public static class SettingsFragment extends PreferenceFragmentCompat {
-        @Override
-        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            setPreferencesFromResource(R.xml.root_preferences, rootKey);
+        if (repeat == "Hourly") {
+            dropdown.setSelection(0);
+        } else if (repeat == "Daily") {
+            dropdown.setSelection(1);
+        } else if (repeat == "Weekly") {
+            dropdown.setSelection(2);
         }
+
+        TextView time = findViewById(R.id.editTextTime);
+
+        if (reminderTime == null) {
+            reminderTime = "19:00";
+        }
+        time.setText(reminderTime);
+        TextView customReminder = findViewById(R.id.editTextCustomReminder);
+        customReminder.setText(customMessage);
+
     }
 
     public void cancelButtonOnClick(View view) {
@@ -53,7 +76,85 @@ public class ReminderActivity extends AppCompatActivity {
     }
 
     public void saveButtonOnClick(View view) {
+        TextView time = findViewById(R.id.editTextTime);
+
+        String timeText = time.getText().toString();
+        if (time.getText() == null || timeText.equals("")) {
+            time.setError("This field is required");
+            return;
+        }
+// Used regular expression to validate time
+        String TIME24HOURS_PATTERN =
+                "([01]?[0-9]|2[0-3]):[0-5][0-9]";
+        Pattern pattern = Pattern.compile(TIME24HOURS_PATTERN);
+        Matcher matcher = pattern.matcher(time.getText().toString());
+        if (!matcher.matches()) {
+            time.setError("Use correct time format");
+            return;
+        }
+
         Intent intent = new Intent(activity, MainActivity.class);
+
+        TextView customReminder = findViewById(R.id.editTextCustomReminder);
+
+        Spinner repeat = findViewById(R.id.repeat);
+
+        SharedPreferences sharedpreferences = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString("reminderTime", time.getText().toString());
+
+        editor.putString("customReminder", customReminder.getText().toString());
+
+        editor.putString("repeat", repeat.getSelectedItem().toString());
+
+        editor.commit();
+
+        ReminderHelper.setNotification(this); //call setNotification method
+
         startActivity(intent);
+    }
+
+    public static class ReminderHelper {
+        public static void setNotification(Context context) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+            Date currentTime = Calendar.getInstance().getTime();
+            Integer hour = currentTime.getHours();
+            Integer minutes = currentTime.getMinutes();
+
+            Intent alarmIntent = new Intent(context, AlarmReceiver.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, 0);
+
+            AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+            SharedPreferences sharedpreferences = context.getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+            String repeat = sharedpreferences.getString("repeat", null);
+            String reminderTime = sharedpreferences.getString("reminderTime", null);
+
+            String[] splitString = reminderTime.split(":");
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+//            calendar.set(Calendar.HOUR_OF_DAY, currentTime.getHours());
+//            calendar.set(Calendar.MINUTE, currentTime.getMinutes());
+
+            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(splitString[0]));
+            calendar.set(Calendar.MINUTE, Integer.parseInt(splitString[1]));
+
+            calendar.set(Calendar.SECOND, 0);
+
+            long interval = 0;
+            if (repeat == "Hourly") {
+                interval = AlarmManager.INTERVAL_HOUR;
+            } else if (repeat == "Daily") {
+                interval = AlarmManager.INTERVAL_DAY;
+            } else {
+                interval = AlarmManager.INTERVAL_DAY * 7;
+            }
+
+            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                    interval, pendingIntent);
+
+        }
     }
 }
