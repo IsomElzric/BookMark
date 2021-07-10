@@ -41,8 +41,8 @@ import java.util.Scanner;
                 File readTheAwesomeFile = new File("BookMarkApp.txt");
                 Scanner myReader = new Scanner(readTheAwesomeFile);
                 while (myReader.hasNextLine()) {
-                    dataThatsSaved = myReader.nextLine();
-                    return dataThatsSaved;
+//                    dataThatsSaved = myReader.nextLine();
+//                    return dataThatsSaved;
                 }
                 myReader.close();
 
