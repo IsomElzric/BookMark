@@ -8,8 +8,8 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingButtonNewBook"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
+        android:layout_width="63dp"
+        android:layout_height="55dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
@@ -25,16 +25,16 @@
         android:layout_height="42dp"
         android:layout_marginTop="16dp"
         android:ems="10"
+        android:hint="Search book"
         android:inputType="text"
-        android:text="Search book"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/listViewBooks"
-        android:layout_width="382dp"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="648dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"

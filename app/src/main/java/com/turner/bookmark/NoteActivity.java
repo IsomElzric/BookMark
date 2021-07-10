@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -23,13 +24,15 @@ public class NoteActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_book);
+        setContentView(R.layout.activity_note);
     }
 
-    public void saveScripture(View view) {
+    public void saveNote(View view) {
         Intent intent = new Intent(this, BookActivity.class);
         EditText note = (EditText) findViewById(R.id.note);
         intent.putExtra(NOTE, note.getText());
         startActivity(intent);
+
+        Toast.makeText(this, "Note Saved", Toast.LENGTH_SHORT).show();
     }
 }

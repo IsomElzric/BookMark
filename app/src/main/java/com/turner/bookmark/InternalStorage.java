@@ -1,42 +1,51 @@
 package com.turner.bookmark;
 
-import android.widget.Toast;
+import android.app.Activity;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Scanner;
 
-import static android.content.Context.MODE_PRIVATE;
+    public class InternalStorage extends Activity {
+        ArrayList<String> textToSave = new ArrayList<String>();
+        ArrayList<String> dataThatsSaved = new ArrayList<String>();
 
-public class InternalStorage {
-    String textToSave;
+        //get string from other class
+        //called on button click
+        public void InternalStorage(ArrayList getinfo){
+            textToSave = getinfo;
+            writeFile();
 
-    //get string from other class
-    //called on button click
-    public void InternalStorage(String getinfo){
-        textToSave = getinfo;
-
-
-    }
-//    public void writeFile(){
-//        try {
+        }
+        public void writeFile(){
+            try {
+                FileWriter myWriter = new FileWriter("BookMarkApp.txt");
+                myWriter.write(String.valueOf(textToSave));
+                myWriter.close();
 //            FileOutputStream fileOutputStream = openFileOutput("Tutorial BookMark.txt", MODE_PRIVATE);
 //            fileOutputStream.write(textToSave.getBytes());
 //            fileOutputStream.close();
-//
-//            Toast.makeText(getApplicationContext(), "Saved Text", Toast.LENGTH_SHORT).show();
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }catch (IOException e){
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void readFile(){
-//        try{
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+
+        public static void readFile() {
+            try {
+                File readTheAwesomeFile = new File("BookMarkApp.txt");
+                Scanner myReader = new Scanner(readTheAwesomeFile);
+                while (myReader.hasNextLine()) {
+//                    dataThatsSaved = myReader.nextLine();
+//                    return dataThatsSaved;
+                }
+                myReader.close();
+
 //            FileInputStream fileInputStream = openFileInput("Tutorial BookMark.txt");
 //            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
 //
@@ -46,15 +55,12 @@ public class InternalStorage {
 //            String lines;
 //            while((lines = bufferedReader.readLine()) != null){
 //                stringBuffer.append(lines + "/n");
-//            }
-//            displayText.setText(stringBuffer.toString());
-//
-//
-//        }catch(FileNotFoundException e){
-//            e.printStackTrace();
-//        }catch(IOException e){
-//            e.printStackTrace();
-//        }
-//   }
 
-}
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }

@@ -9,6 +9,7 @@ public class BookList {
     private final List<BookDocument> currentList;
     private final List<BookDocument> completedList;
 
+
     public BookList() {
         fullList = new ArrayList<>();
         currentList = new ArrayList<>();
@@ -26,14 +27,19 @@ public class BookList {
     }
 
     public List<BookDocument> getFullList() {
+
         return fullList;
     }
 
     public List<BookDocument> getCurrentList() {
+
         return currentList;
     }
 
     public List<BookDocument> getCompletedList() {
+
         return completedList;
     }
+
+    //call internalStorage.java
 }
