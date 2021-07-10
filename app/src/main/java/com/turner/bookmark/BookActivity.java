@@ -22,7 +22,6 @@ public class BookActivity extends AppCompatActivity {
     public String author;
     public String bookTitle;
     public String description;
-    public int rating;
     public ArrayList<String> notes;
     public String bookCover;
     public static final String NOTE = "com.turner.bookmark.NOTE";
@@ -35,6 +34,8 @@ public class BookActivity extends AppCompatActivity {
         Intent intent = getIntent();
         BookDocument book = gson.fromJson(intent.getStringExtra(MainActivity.EXTRA_MESSAGE),
                 BookDocument.class);
+
+        StarRating starRating = new StarRating();
 
         //ListView testing
         notes.add("note text");
@@ -80,10 +81,6 @@ public class BookActivity extends AppCompatActivity {
         return description;
     }
 
-    public int getRating() {
-        return rating;
-    }
-
     public ArrayList<String> getNotes() {
         return notes;
     }
@@ -102,16 +99,6 @@ public class BookActivity extends AppCompatActivity {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setRating(int rating) {
-        if (rating > 5){
-            this.rating = 5;
-        } else if (rating < 0) {
-            this.rating = 0;
-        } else {
-            this.rating = 2;
-        }
     }
 
     public void setNotes(ArrayList<String> notes) {
