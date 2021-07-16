@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 */
             });
         }
-        ReminderActivity.ReminderHelper.setNotification(this);
+        //ReminderActivity.ReminderHelper.setNotification(this);
 
     }
 

@@ -37,14 +37,18 @@ public class BookActivity extends AppCompatActivity {
 
         StarRating starRating = new StarRating();
 
-        //ListView testing
-        notes.add("note text");
-        notes.add("blah blah blah");
-        notes.add("third test string");
-        ArrayAdapter noteAdapter = new ArrayAdapter<String>(this, R.layout.activity_book,
-                notes);
+//        ListView testing
+//        notes.add("note text");
+//        notes.add("blah blah blah");
+//        notes.add("third test string");
+//        notes.add("note1");
+//        notes.add("note2");
+//        notes.add("note3");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, notes);
         ListView listview = (ListView) findViewById(R.id.notes);
-        listview.setAdapter(noteAdapter);
+        listview.setAdapter(adapter);
 
         try {
             Log.d(TAG, String.format("Deserialized to %s", book.toString()));
@@ -66,46 +70,6 @@ public class BookActivity extends AppCompatActivity {
 
     public void removeNote(View view) {
         notes.remove("note");
-    }
 
-    //Getters and setters
-    public String getAuthor() {
-        return author;
-    }
-
-    public String getBookTitle() {
-        return bookTitle;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public ArrayList<String> getNotes() {
-        return notes;
-    }
-
-    public String getBookCover() {
-        return bookCover;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public void setTitle(String title) {
-        this.bookTitle = title;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setNotes(ArrayList<String> notes) {
-        this.notes = notes;
-    }
-
-    public void setBookCover(String bookCover) {
-        this.bookCover = bookCover;
     }
 }
