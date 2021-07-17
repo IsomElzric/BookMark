@@ -19,34 +19,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_menu_add" />
 
-    <EditText
-        android:id="@+id/editSearchBook"
-        android:layout_width="261dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Search book"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ListView
         android:id="@+id/listViewBooks"
         android:layout_width="0dp"
         android:layout_height="627dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.623"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editSearchBook"
-        app:layout_constraintVertical_bias="0.909">
+        app:layout_constraintTop_toTopOf="parent">
 
     </ListView>
 

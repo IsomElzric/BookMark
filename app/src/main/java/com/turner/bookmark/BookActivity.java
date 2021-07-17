@@ -75,6 +75,9 @@ public class BookActivity extends AppCompatActivity {
         author = book.getAuthor().get(0);
         bookTitle = book.getTitle();
 
+        TextView titleView = findViewById(R.id.book_title);
+        titleView.setText(String.format("%s\n%s", bookTitle, author));
+
         Log.d(TAG, String.format("Book: %s by %s", bookTitle, author));
     }
 
