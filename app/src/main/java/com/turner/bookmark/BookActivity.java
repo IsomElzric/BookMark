@@ -40,6 +40,7 @@ public class BookActivity extends AppCompatActivity {
         StarRating starRating = new StarRating();
 
 //        ListView testing
+        notes = new ArrayList<>();
 //        notes.add("note text");
 //        notes.add("blah blah blah");
 //        notes.add("third test string");
