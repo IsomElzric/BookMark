@@ -63,8 +63,8 @@ public class NoteActivity extends AppCompatActivity{
             String note = intentExtras.getString("note");
             extras.putString("deletedNote", note);
             deleteIntent.putExtras(extras);
-
+        } else {
+            startActivity(deleteIntent);
         }
-        startActivity(deleteIntent);
     }
 }
