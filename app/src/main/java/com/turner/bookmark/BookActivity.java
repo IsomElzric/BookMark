@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -45,10 +47,22 @@ public class BookActivity extends AppCompatActivity {
 //        notes.add("note2");
 //        notes.add("note3");
 
+        //Set up the listView for notes
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, notes);
-        ListView listview = (ListView) findViewById(R.id.notes);
-        listview.setAdapter(adapter);
+        ListView noteView = (ListView) findViewById(R.id.notes);
+        noteView.setAdapter(adapter);
+
+       //Manage click events for each note in the listView
+        noteView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String itemValue = (String) parent.getItemAtPosition(position);
+                Intent intent = new Intent(getApplicationContext(), NoteActivity.class);
+                intent.putExtra(NOTE, itemValue);
+                startActivity(intent);
+            }
+        });
 
         try {
             Log.d(TAG, String.format("Deserialized to %s", book.toString()));
