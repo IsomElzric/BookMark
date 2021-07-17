@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,14 +40,21 @@ public class BookActivity extends AppCompatActivity {
 
         StarRating starRating = new StarRating();
 
-//        ListView testing
         notes = new ArrayList<>();
-//        notes.add("note text");
-//        notes.add("blah blah blah");
-//        notes.add("third test string");
-//        notes.add("note1");
-//        notes.add("note2");
-//        notes.add("note3");
+
+        if (intent.hasExtra("savedNote")) {
+            Bundle intentExtras = getIntent().getExtras();
+            String note = intentExtras.getString("savedNote");
+            Log.i("Intent Received", "Received intent with note");
+            notes.add(note);
+            Log.i("Note Saved", "Note added to notes array");
+        } else if (intent.hasExtra("deletedNote")) {
+            Bundle intentExtras = getIntent().getExtras();
+            String note = intentExtras.getString("deletedNote");
+            Log.i("Intent Received", "intent to delete note");
+            notes.remove(notes.indexOf(note));
+            Log.i("Note Deleted", "Note deleted from notes array");
+        }
 
         //Set up the listView for notes
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -60,7 +68,9 @@ public class BookActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String itemValue = (String) parent.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(), NoteActivity.class);
-                intent.putExtra(NOTE, itemValue);
+                Bundle extras = new Bundle();
+                extras.putString("note", itemValue);
+                intent.putExtras(extras);
                 startActivity(intent);
             }
         });
@@ -82,12 +92,8 @@ public class BookActivity extends AppCompatActivity {
     }
 
     public void createNote(View view) {
-        Intent intent = new Intent(this, NoteActivity.class);
-        startActivity(intent);
+        Intent noteIntent = new Intent(this, NoteActivity.class);
+        startActivity(noteIntent);
     }
 
-    public void removeNote(View view) {
-        notes.remove("note");
-
-    }
 }
