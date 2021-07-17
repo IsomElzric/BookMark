@@ -41,6 +41,7 @@ public class ReminderActivity extends AppCompatActivity {
         String repeat = sharedpreferences.getString("repeat", null);
         String reminderTime = sharedpreferences.getString("reminderTime", null);
         String customMessage = sharedpreferences.getString("customReminder", null);
+        String ampm = sharedpreferences.getString("ampm", null);
 
         Spinner dropdown = findViewById(R.id.repeat);
 //create a list of items for the spinner.
@@ -57,6 +58,21 @@ public class ReminderActivity extends AppCompatActivity {
             dropdown.setSelection(1);
         } else if (repeat == "Weekly") {
             dropdown.setSelection(2);
+        }
+
+        Spinner ampmDropdown = findViewById(R.id.ampm);
+//create a list of items for the spinner.
+        String[] timeOfDay = new String[]{"AM", "PM"};
+//create an adapter to describe how the items are displayed, adapters are used in several places in android.
+//There are multiple variations of this, but this is the basic variant.
+        ArrayAdapter<String> ampmAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, timeOfDay);
+//set the spinners adapter to the previously created one.
+        ampmDropdown.setAdapter(ampmAdapter);
+
+        if (ampm == "AM") {
+            ampmDropdown.setSelection(0);
+        } else if (ampm == "PM") {
+            ampmDropdown.setSelection(1);
         }
 
         TextView time = findViewById(R.id.editTextTime);
@@ -84,9 +100,9 @@ public class ReminderActivity extends AppCompatActivity {
             return;
         }
 // Used regular expression to validate time
-        String TIME24HOURS_PATTERN =
-                "([01]?[0-9]|2[0-3]):[0-5][0-9]";
-        Pattern pattern = Pattern.compile(TIME24HOURS_PATTERN);
+        String TIME12HOUR_PATTERN =
+                "([1-9]|1[012]):[0-5][0-9]";
+        Pattern pattern = Pattern.compile(TIME12HOUR_PATTERN);
         Matcher matcher = pattern.matcher(time.getText().toString());
         if (!matcher.matches()) {
             time.setError("Use correct time format");
@@ -98,6 +114,7 @@ public class ReminderActivity extends AppCompatActivity {
         TextView customReminder = findViewById(R.id.editTextCustomReminder);
 
         Spinner repeat = findViewById(R.id.repeat);
+        Spinner ampmSpinner = findViewById(R.id.ampm);
 
         SharedPreferences sharedpreferences = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -106,6 +123,7 @@ public class ReminderActivity extends AppCompatActivity {
         editor.putString("customReminder", customReminder.getText().toString());
 
         editor.putString("repeat", repeat.getSelectedItem().toString());
+        editor.putString("ampm", ampmSpinner.getSelectedItem().toString());
 
         editor.commit();
 
@@ -130,6 +148,7 @@ public class ReminderActivity extends AppCompatActivity {
             SharedPreferences sharedpreferences = context.getSharedPreferences("Preferences", Context.MODE_PRIVATE);
             String repeat = sharedpreferences.getString("repeat", null);
             String reminderTime = sharedpreferences.getString("reminderTime", null);
+            String ampmReminderTime = sharedpreferences.getString("ampm", null);
 
             String[] splitString = reminderTime.split(":");
 
@@ -140,6 +159,8 @@ public class ReminderActivity extends AppCompatActivity {
 
             calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(splitString[0]));
             calendar.set(Calendar.MINUTE, Integer.parseInt(splitString[1]));
+            //ternary operator
+            calendar.set(Calendar.AM_PM, ampmReminderTime == "AM" ? 0 : 1);
 
             calendar.set(Calendar.SECOND, 0);
 
