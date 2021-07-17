@@ -3,6 +3,7 @@ package com.turner.bookmark;
 import java.util.ArrayList;
 import java.util.List;
 
+// class for storing a collection of books
 public class BookList {
 
     private final List<BookDocument> fullList;
@@ -15,12 +16,12 @@ public class BookList {
         currentList = new ArrayList<>();
         completedList = new ArrayList<>();
     }
-
+    // add a book to the fullList and currentList
     public void addCurrent(BookDocument book) {
         fullList.add(book);
         currentList.add(book);
     }
-
+    // remove from currentList and add to completedList
     public void addCompleted(BookDocument book) {
         currentList.remove(book);
         completedList.add(book);

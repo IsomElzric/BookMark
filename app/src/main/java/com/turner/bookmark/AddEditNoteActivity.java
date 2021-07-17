@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
+// This activity enables you to add and edit notes for each book
 public class AddEditNoteActivity extends AppCompatActivity {
     public static final String EXTRA_ID = "com.kabasele.activitynote.EXTRA_ID";
     public static final String EXTRA_TITLE = "com.kabasele.activitynote.EXTRA_TITLE";
@@ -20,6 +21,7 @@ public class AddEditNoteActivity extends AppCompatActivity {
     private EditText editTextDescription;
     private NumberPicker numberPickerPriority;
     @Override
+    // Set up activity for adding and editing notes
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_add_note);
@@ -39,6 +41,7 @@ public class AddEditNoteActivity extends AppCompatActivity {
             setTitle("Add Note");
         }
     }
+    // Validates note details and saves note
     private void saveNote() {
         String title = editTextTitle.getText().toString();
         String description = editTextDescription.getText().toString();
@@ -59,12 +62,14 @@ public class AddEditNoteActivity extends AppCompatActivity {
         finish();
     }
     @Override
+    // Set up options menu
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.add_note_menu, menu);
         return true;
     }
     @Override
+    // Checking to see if user clicked on the save note button and saves
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save_note:

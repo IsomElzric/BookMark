@@ -37,19 +37,21 @@ public class ReminderActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        // get shared preferences for reminder
         SharedPreferences sharedpreferences = this.getSharedPreferences("Preferences", Context.MODE_PRIVATE);
         String repeat = sharedpreferences.getString("repeat", null);
         String reminderTime = sharedpreferences.getString("reminderTime", null);
         String customMessage = sharedpreferences.getString("customReminder", null);
         String ampm = sharedpreferences.getString("ampm", null);
 
+        // load previously saved settings
         Spinner dropdown = findViewById(R.id.repeat);
-//create a list of items for the spinner.
+        //create a list of items for the spinner.
         String[] items = new String[]{"Hourly", "Daily", "Weekly"};
-//create an adapter to describe how the items are displayed, adapters are used in several places in android.
-//There are multiple variations of this, but this is the basic variant.
+        //create an adapter to describe how the items are displayed, adapters are used in several places in android.
+        //There are multiple variations of this, but this is the basic variant.
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
-//set the spinners adapter to the previously created one.
+        //set the spinners adapter to the previously created one.
         dropdown.setAdapter(adapter);
 
         if (repeat == "Hourly") {
@@ -61,12 +63,12 @@ public class ReminderActivity extends AppCompatActivity {
         }
 
         Spinner ampmDropdown = findViewById(R.id.ampm);
-//create a list of items for the spinner.
+        //create a list of items for the spinner.
         String[] timeOfDay = new String[]{"AM", "PM"};
-//create an adapter to describe how the items are displayed, adapters are used in several places in android.
-//There are multiple variations of this, but this is the basic variant.
+        //create an adapter to describe how the items are displayed, adapters are used in several places in android.
+        //There are multiple variations of this, but this is the basic variant.
         ArrayAdapter<String> ampmAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, timeOfDay);
-//set the spinners adapter to the previously created one.
+        //set the spinners adapter to the previously created one.
         ampmDropdown.setAdapter(ampmAdapter);
 
         if (ampm == "AM") {
@@ -78,7 +80,7 @@ public class ReminderActivity extends AppCompatActivity {
         TextView time = findViewById(R.id.editTextTime);
 
         if (reminderTime == null) {
-            reminderTime = "19:00";
+            reminderTime = "10:00";
         }
         time.setText(reminderTime);
         TextView customReminder = findViewById(R.id.editTextCustomReminder);
@@ -86,20 +88,23 @@ public class ReminderActivity extends AppCompatActivity {
 
     }
 
+    // go back to main activity when cancel button is clicked
     public void cancelButtonOnClick(View view) {
         Intent intent = new Intent(activity, MainActivity.class);
         startActivity(intent);
     }
 
+    // saves settings and create reminder and returns to main activity
     public void saveButtonOnClick(View view) {
         TextView time = findViewById(R.id.editTextTime);
 
+        //validate time
         String timeText = time.getText().toString();
         if (time.getText() == null || timeText.equals("")) {
             time.setError("This field is required");
             return;
         }
-// Used regular expression to validate time
+        // Use regular expression to validate time
         String TIME12HOUR_PATTERN =
                 "([1-9]|1[012]):[0-5][0-9]";
         Pattern pattern = Pattern.compile(TIME12HOUR_PATTERN);
@@ -116,6 +121,7 @@ public class ReminderActivity extends AppCompatActivity {
         Spinner repeat = findViewById(R.id.repeat);
         Spinner ampmSpinner = findViewById(R.id.ampm);
 
+        // save settings
         SharedPreferences sharedpreferences = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString("reminderTime", time.getText().toString());
@@ -127,13 +133,16 @@ public class ReminderActivity extends AppCompatActivity {
 
         editor.commit();
 
+        // create notification
         ReminderHelper.setNotification(this); //call setNotification method
 
         startActivity(intent);
     }
 
+    // helper class to setup reminders. this can be used in other activities to set up reminders
     public static class ReminderHelper {
         public static void setNotification(Context context) {
+            //get shared preferences
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
             Date currentTime = Calendar.getInstance().getTime();
@@ -152,10 +161,9 @@ public class ReminderActivity extends AppCompatActivity {
 
             String[] splitString = reminderTime.split(":");
 
+            // set up reminder time
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
-//            calendar.set(Calendar.HOUR_OF_DAY, currentTime.getHours());
-//            calendar.set(Calendar.MINUTE, currentTime.getMinutes());
 
             calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(splitString[0]));
             calendar.set(Calendar.MINUTE, Integer.parseInt(splitString[1]));
@@ -164,6 +172,7 @@ public class ReminderActivity extends AppCompatActivity {
 
             calendar.set(Calendar.SECOND, 0);
 
+            // specify reminder interval
             long interval = 0;
             if (repeat == "Hourly") {
                 interval = AlarmManager.INTERVAL_HOUR;
@@ -173,6 +182,7 @@ public class ReminderActivity extends AppCompatActivity {
                 interval = AlarmManager.INTERVAL_DAY * 7;
             }
 
+            // create reminder
             manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                     interval, pendingIntent);
 

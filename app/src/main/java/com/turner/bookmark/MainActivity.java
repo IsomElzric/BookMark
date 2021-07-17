@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         BookDocument book = gson.fromJson(intent.getStringExtra(SearchActivity.EXTRA_MESSAGE), BookDocument.class);
 
+        // attempt to get the list of books
         try {
             Log.d(TAG, String.format("Deserialized to %s", book.toString()));
 
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, Arrays.toString(npe.getStackTrace()));
         }
 
+        // display the list of books
         if (bookList.getFullList() != null) {
             list = bookList.getFullList();
             ArrayAdapter<BookDocument> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_list_item_1, list);
@@ -64,12 +66,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    // go to the search view
     public void onClickForTest2(View view) {
         Intent intent = new Intent(activity, SearchActivity.class);
         startActivity(intent);
     }
 
+    // go to the reminder view
     public void reminderButtonOnClick(View view) {
         Intent intent = new Intent(activity, ReminderActivity.class);
         startActivity(intent);

@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
-
+// class for storing book information
 public class BookDocument implements Serializable {
 
     @SerializedName("title")

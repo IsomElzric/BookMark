@@ -10,10 +10,11 @@ import android.widget.Toast;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+// Helper class that sets up reminders
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-
+        // get shared preferences for the reminder
         SharedPreferences sharedpreferences = context.getSharedPreferences("Preferences", Context.MODE_PRIVATE);
         String customMessage = sharedpreferences.getString("customReminder",null);
 
